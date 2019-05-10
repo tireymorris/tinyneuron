@@ -18,6 +18,6 @@
   },
   "scripts": {
     "build": "babel src -d dist",
-    "test": "yarn jest spec/"
+    "test": "yarn jest --no-cache spec/"
   }
 }
