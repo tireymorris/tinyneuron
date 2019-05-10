@@ -46,3 +46,23 @@ To use another activation function (e.g. sigmoid):
 import { activation, Perceptron } from 'tinyneuron';
 const perceptron = new Perceptron({ activation: activation.sigmoid });
 ```
+
+##### Example: AND gate
+```
+const andNode = new Perceptron({
+  addBias: true,
+  weights: [1, 1, -1.5]
+});
+
+andNode.assignInputs([0, 0]);
+andNode.getOutput() === -1;
+
+andNode.assignInputs([0, 1]);
+andNode.getOutput() === -1;
+
+andNode.assignInputs([1, 0]);
+andNode.getOutput() === -1;
+
+andNode.assignInputs([1, 1]);
+andNode.getOutput() === 1;
+```
