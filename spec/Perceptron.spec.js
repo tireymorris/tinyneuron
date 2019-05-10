@@ -18,7 +18,7 @@ describe('Perceptron', () => {
       const random = Math.random;
       Math.random = jest.fn().mockImplementation(() => 0.5);
 
-      const perceptron = new Perceptron({ numWeights: 2, inputs: [1.0, 1.0] });
+      const perceptron = new Perceptron({ inputs: [1.0, 1.0] });
       expect(perceptron.getOutput()).toEqual(1);
 
       Math.random = random;
@@ -28,7 +28,7 @@ describe('Perceptron', () => {
       const random = Math.random;
       Math.random = jest.fn().mockImplementation(() => -0.5);
 
-      const perceptron = new Perceptron({ numWeights: 2, inputs: [1.0, 0.0] });
+      const perceptron = new Perceptron({ inputs: [1.0, 0.0] });
       expect(perceptron.getOutput()).toEqual(-1);
 
       Math.random = random;

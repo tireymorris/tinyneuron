@@ -6,23 +6,21 @@ class Perceptron {
     activate = sign,
     addBias = true,
     inputs = [],
-    learningRate = 0.05,
-    numWeights = 1
+    learningRate = 0.05
   }) {
     this.activate = activate;
     this.addBias = addBias;
     this.inputs = inputs;
     this.learningRate = learningRate;
-    this.weights = [];
 
-    this.generateWeights(numWeights);
+    this.generateWeights();
   }
 
-  generateWeights(numWeights) {
+  generateWeights() {
     // Generate weights between -1 and 1
     this.weights = [];
 
-    for (let i = 0; i < numWeights; i++) {
+    for (let i = 0; i < this.inputs.length; i++) {
       this.weights.push(Math.random() * 2 - 1);
     }
 
