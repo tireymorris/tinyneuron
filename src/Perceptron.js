@@ -25,6 +25,13 @@ class Perceptron {
   }
 
   assignInputs(inputs) {
+    if (
+      !inputs instanceof Array ||
+      (inputs.length > 0 && inputs.some(input => typeof input !== 'number'))
+    ) {
+      throw new Error('must pass array of numbers into assignWeights');
+    }
+
     this.inputs = [];
     inputs.forEach(input => this.inputs.push(input));
 
@@ -34,6 +41,12 @@ class Perceptron {
   }
 
   assignWeights(weights) {
+    if (
+      !weights instanceof Array ||
+      (weights.length > 0 && weights.some(weight => typeof weight !== 'number'))
+    ) {
+      throw new Error('must pass array of numbers into assignWeights');
+    }
     this.weights = [];
 
     weights.forEach(weight => this.weights.push(weight));
@@ -60,7 +73,7 @@ class Perceptron {
   }
 
   train(targetOutput) {
-    if (targetOutput === undefined) {
+    if (targetOutput === undefined || typeof targetOutput !== 'number') {
       throw new Error('must provide targetOutput to Perceptron::train()');
     }
     // retrieve current output
