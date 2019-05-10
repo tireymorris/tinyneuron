@@ -42,6 +42,9 @@ class Perceptron {
   }
 
   train(targetOutput) {
+    if (targetOutput === undefined) {
+      throw new Error('must provide targetOutput to Perceptron::train()');
+    }
     // retrieve current output
     const guessedOutput = this.getOutput();
 

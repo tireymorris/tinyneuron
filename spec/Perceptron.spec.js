@@ -46,8 +46,7 @@ describe('Perceptron', () => {
       const perceptron = new Perceptron({
         addBias: false,
         inputs: [1.25, 1.5, -5.75], // x, y, z
-        learningRate: 0.005,
-        numWeights: 3
+        learningRate: 0.005
       });
 
       expect(perceptron.getOutput()).toEqual(-1);
