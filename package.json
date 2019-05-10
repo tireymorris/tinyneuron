@@ -4,7 +4,7 @@
   "description": "An implementation of various neural networks in JavaScript",
   "main": "dist/index.js",
   "repository": "https://github.com/tireymorris/tinyneuron.git",
-  "author": "tireymorris <tireymorris@gmail.com>",
+  "author": "Ty Morris <tireymorris@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
     "eslint": "^5.16.0",
