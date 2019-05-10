@@ -40,7 +40,6 @@ class Perceptron {
     );
 
     // run activation function on weighted sum
-    console.log('confidence = ', sum);
     return this.activate(sum);
   }
 
