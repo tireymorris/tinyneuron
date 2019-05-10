@@ -8,7 +8,7 @@ An implementation of various neural networks concepts in JavaScript
 #### Creation/config
 Create a perceptron like so:
 ```
-const config = { numWeights: 5, inputs: [0.25, 0.5, -0.75, 1.0, -1.25] };
+const config = { inputs: [0.25, 0.5, -0.75, 1.0, -1.25] };
 const perceptron = new Perceptron(config);
 ```
 
