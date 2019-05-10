@@ -1,4 +1,5 @@
 import Perceptron from '../src/Perceptron';
+import { sigmoid, sign } from '../src/activation';
 
 describe('Perceptron', () => {
   describe('generateWeights', () => {
@@ -61,6 +62,59 @@ describe('Perceptron', () => {
       expect(perceptron.getOutput()).toEqual(1);
 
       Math.random = random;
+    });
+  });
+
+  describe('general', () => {
+    test('assigns weights correctly', () => {
+      const perceptron = new Perceptron({ weights: [1, 0, 1] });
+      expect(perceptron.weights.length).toBeGreaterThan(0);
+    });
+    test('assigns inputs correctly', () => {
+      const perceptron = new Perceptron({ inputs: [1, 0, 1] });
+      expect(perceptron.inputs.length).toBeGreaterThan(0);
+    });
+    test('can represent boolean AND', () => {
+      // bias and weight values found here:
+      // https://stackoverflow.com/questions/2480650/role-of-bias-in-neural-networks
+      // https://medium.com/@stanleydukor/neural-representation-of-and-or-not-xor-and-xnor-logic-gates-perceptron-algorithm-b0275375fea1
+      const andNode = new Perceptron({
+        addBias: true,
+        weights: [1, 1, -1.5]
+      });
+
+      andNode.assignInputs([0, 0]);
+      expect(andNode.getOutput()).toEqual(-1);
+
+      andNode.assignInputs([0, 1]);
+      expect(andNode.getOutput()).toEqual(-1);
+
+      andNode.assignInputs([1, 0]);
+      expect(andNode.getOutput()).toEqual(-1);
+
+      andNode.assignInputs([1, 1]);
+      expect(andNode.getOutput()).toEqual(1);
+    });
+    test('can represent boolean OR', () => {
+      // bias and weight values found here:
+      // https://stackoverflow.com/questions/2480650/role-of-bias-in-neural-networks
+      // https://medium.com/@stanleydukor/neural-representation-of-and-or-not-xor-and-xnor-logic-gates-perceptron-algorithm-b0275375fea1
+      const andNode = new Perceptron({
+        addBias: true,
+        weights: [1, 1, -1]
+      });
+
+      andNode.assignInputs([0, 0]);
+      expect(andNode.getOutput()).toEqual(-1);
+
+      andNode.assignInputs([0, 1]);
+      expect(andNode.getOutput()).toEqual(1);
+
+      andNode.assignInputs([1, 0]);
+      expect(andNode.getOutput()).toEqual(1);
+
+      andNode.assignInputs([1, 1]);
+      expect(andNode.getOutput()).toEqual(1);
     });
   });
 });

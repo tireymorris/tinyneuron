@@ -4,18 +4,39 @@ import { zip } from './util';
 class Perceptron {
   constructor({
     activate = sign,
-    addBias = true,
+    addBias = false,
     bias = 1,
     inputs = [],
-    learningRate = 0.05
+    learningRate = 0.05,
+    weights = []
   }) {
     this.activate = activate;
     this.addBias = addBias;
     this.bias = 1;
-    this.inputs = inputs;
     this.learningRate = learningRate;
 
-    this.generateWeights();
+    this.assignInputs(inputs);
+
+    if (weights.length > 0) {
+      this.assignWeights(weights);
+    } else {
+      this.generateWeights();
+    }
+  }
+
+  assignInputs(inputs) {
+    this.inputs = [];
+    inputs.forEach(input => this.inputs.push(input));
+
+    if (this.addBias) {
+      this.inputs.push(this.bias);
+    }
+  }
+
+  assignWeights(weights) {
+    this.weights = [];
+
+    weights.forEach(weight => this.weights.push(weight));
   }
 
   generateWeights() {
@@ -24,11 +45,6 @@ class Perceptron {
 
     for (let i = 0; i < this.inputs.length; i++) {
       this.weights.push(Math.random() * 2 - 1);
-    }
-
-    if (this.addBias) {
-      this.weights.push(Math.random() * 2 - 1);
-      this.inputs.push(this.bias);
     }
   }
 

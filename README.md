@@ -15,7 +15,7 @@ const config = { inputs: [0.25, 0.5, -0.75, 1.0, -1.25] };
 const perceptron = new Perceptron(config);
 ```
 
-A Perceptron has `inputs`, a `learningRate`, and an activation function `activate`, which can all be passed into the constructor config. The activation function defaults to the sign function, `const sign = (x) => x >= 0 ? 1 : -1`. The number of weights defaults to inputs length. You can also optionally disable the bias neuron with the config flag `addBias: false`. The learning rate defaults to 5%, which still allows for dramatic improvements between cycles.
+A Perceptron has `inputs`, `weights`, a `learningRate`, and an activation function `activate`, which can all be passed into the constructor config. The activation function defaults to the sign function, `const sign = (x) => x >= 0 ? 1 : -1`. The number of weights defaults to inputs length. You can also optionally disable the bias neuron with the config flag `addBias: false`, or tweak the bias output with `bias: value`. The learning rate defaults to 5%, which still allows for dramatic improvements between cycles.
 
 To generate perceptron outputs:
 
@@ -25,6 +25,8 @@ console.log(perceptron.getOutput()) // -> activate( (Math.random() * 2 - 1) * 1.
 ```
 
 weights are assigned randomly as values between -1 and 1.
+
+To reassign weights and inputs, call `percepton.assignWeights(array)` or `perceptron.assignInputs(array)`
 
 #### Training
 
