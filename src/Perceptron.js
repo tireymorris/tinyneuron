@@ -5,11 +5,13 @@ class Perceptron {
   constructor({
     activate = sign,
     addBias = true,
+    bias = 1,
     inputs = [],
     learningRate = 0.05
   }) {
     this.activate = activate;
     this.addBias = addBias;
+    this.bias = 1;
     this.inputs = inputs;
     this.learningRate = learningRate;
 
@@ -25,8 +27,8 @@ class Perceptron {
     }
 
     if (this.addBias) {
-      this.weights.push(1);
-      this.inputs.push(1);
+      this.weights.push(Math.random() * 2 - 1);
+      this.inputs.push(this.bias);
     }
   }
 
