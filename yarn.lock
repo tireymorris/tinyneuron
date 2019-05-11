@@ -3952,9 +3952,9 @@ throat@^4.0.0:
   integrity sha1-iQN8vJLFarGJJua6TLsgDhVnKmo=
 
 tinymatrix@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/tinymatrix/-/tinymatrix-0.4.6.tgz#80333ff62aed080683e7b89088cf42389e9f77f4"
-  integrity sha512-khWb0CIYnTCeTNrhr/30jhQvs9zcEGTw/raTTT//yt0Uw0OhrE7OaH9qVjiFcp2HHyNO4EHMZ3JK9rQZHK+Teg==
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/tinymatrix/-/tinymatrix-0.4.9.tgz#170be44441f6c1d051ca18ed747df0f55f59b69f"
+  integrity sha512-+8Z11gCuBmkkdWe/d+rM8X/Lug9yjAD9uV9Ot1f3GSMRV8Yjd9Qq1f7OvSw4BJ+asQnVRsjbKTBVPlGilUWAAQ==
   dependencies:
     "@babel/cli" "^7.4.4"
     "@babel/core" "^7.4.4"

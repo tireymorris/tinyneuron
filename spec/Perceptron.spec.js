@@ -15,7 +15,7 @@ describe('Perceptron', () => {
   });
 
   describe('getOutput', () => {
-    test('with sign activation function returns 1 for positive weights and activated inpus', () => {
+    test('with sign activation function returns 1 for positive weights and activationd inpus', () => {
       const random = Math.random;
       Math.random = jest.fn().mockImplementation(() => 0.5);
 

@@ -3,14 +3,14 @@ import { zip } from './util';
 
 class Perceptron {
   constructor({
-    activate = sign,
+    activation = sign,
     addBias = false,
     bias = 1,
     inputs = [],
     learningRate = 0.05,
     weights = []
   }) {
-    this.activate = activate;
+    this.activation = activation;
     this.addBias = addBias;
     this.bias = 1;
     this.learningRate = learningRate;
@@ -69,7 +69,7 @@ class Perceptron {
     );
 
     // run activation function on weighted sum
-    return this.activate(sum);
+    return this.activation(sum);
   }
 
   train(targetOutput) {
