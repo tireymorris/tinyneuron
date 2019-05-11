@@ -67,3 +67,7 @@ andNode.getOutput() === -1;
 andNode.assignInputs([1, 1]);
 andNode.getOutput() === 1;
 ```
+
+
+#### References
+Heavily referenced Daniel Shiffman's The Nature of Code (https://natureofcode.com/book)
