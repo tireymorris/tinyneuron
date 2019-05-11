@@ -145,56 +145,6 @@ class NeuralNetwork {
     // adjust input -> hidden weights by delta
     this.weightsIH = Matrix.add(this.weightsIH, deltaWeightsIH);
     this.biasH = Matrix.add(this.biasH, hiddenGradient);
-    // Generating the Hidden Outputs
-    // let inputs = Matrix.fromArray(inputsArray);
-    // let hidden = Matrix.multiply(this.weightsIH, inputs);
-    // hidden = Matrix.add(hidden, this.biasH);
-    // // activation function!
-    // hidden = Matrix.map(hidden, ([i, j]) =>
-    //   this.activation(hidden.values[(i, j)])
-    // );
-    // // Generating the output's output!
-    // let outputs = Matrix.multiply(this.weightsHO, hidden);
-    // outputs = Matrix.add(outputs, this.biasO);
-    // outputs = Matrix.map(outputs, ([i, j]) =>
-    //   this.activation(outputs.values[(i, j)])
-    // );
-    // // Convert array to matrix object
-    // let targets = Matrix.fromArray(targetsArray);
-    // // Calculate the error
-    // // ERROR = TARGETS - OUTPUTS
-    // let output_errors = Matrix.subtract(targets, outputs);
-    // // let gradient = outputs * (1 - outputs);
-    // // Calculate gradient
-    // let gradients = Matrix.map(
-    //   outputs,
-    //   ([i, j]) => outputs.values[i][j] * (1 - outputs.values[i][j])
-    // );
-    // gradients = Matrix.entrywiseProduct(gradients, output_errors);
-    // gradients = Matrix.scale(gradients, this.learningRate);
-    // // Calculate deltas
-    // let hidden_T = Matrix.transpose(hidden);
-    // let weight_ho_deltas = Matrix.multiply(gradients, hidden_T);
-    // // Adjust the weights by deltas
-    // this.weightsHO = Matrix.add(this.weightsHO, weight_ho_deltas);
-    // // Adjust the bias by its deltas (which is just the gradients)
-    // this.biasO = Matrix.add(this.biasO, gradients);
-    // // Calculate the hidden layer errors
-    // let who_t = Matrix.transpose(this.weightsHO);
-    // let hidden_errors = Matrix.multiply(who_t, output_errors);
-    // // Calculate hidden gradient
-    // let hidden_gradient = Matrix.map(
-    //   hidden,
-    //   ([i, j]) => hidden.values[i][j] * (1 - hidden.values[i][j])
-    // );
-    // hidden_gradient = Matrix.entrywiseProduct(hidden_gradient, hidden_errors);
-    // hidden_gradient = Matrix.scale(hidden_gradient, this.learningRate);
-    // // Calcuate input->hidden deltas
-    // let inputs_T = Matrix.transpose(inputs);
-    // let weight_ih_deltas = Matrix.multiply(hidden_gradient, inputs_T);
-    // this.weightsIH = Matrix.add(this.weightsIH, weight_ih_deltas);
-    // // Adjust the bias by its deltas (which is just the gradients)
-    // this.biasH = Matrix.add(this.biasH, hidden_gradient);
   }
 }
 

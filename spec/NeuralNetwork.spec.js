@@ -42,6 +42,11 @@ describe('NeuralNetwork', () => {
         network.train(inputs[idx], [targets[idx]]);
       }
 
+      console.log('[1, 0] => ', network.feedForward([1, 0]));
+      console.log('[0, 1] => ', network.feedForward([0, 1]));
+      console.log('[0, 0] => ', network.feedForward([0, 0]));
+      console.log('[1, 1] => ', network.feedForward([1, 1]));
+
       expect(network.feedForward([1, 0])[0]).toBeLessThanOrEqual(1);
       expect(network.feedForward([1, 0])[0]).toBeGreaterThanOrEqual(0.95);
 
