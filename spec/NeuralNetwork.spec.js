@@ -26,18 +26,17 @@ describe('NeuralNetwork', () => {
   });
 
   describe('train', () => {
-    it('can solve XOR', () => {
+    test('can solve XOR', () => {
       const network = new NeuralNetwork({
         inputNodes: 2,
-        hiddenNodes: 10, // probably overkill
+        hiddenNodes: 10,
         outputNodes: 1,
         learningRate: 0.25
       });
       const inputs = [[1, 0], [0, 1], [1, 1], [0, 0]];
       const targets = [1, 1, 0, 0];
 
-      // probably overkill
-      for (let i = 0; i < 100000; i++) {
+      for (let i = 0; i < 50000; i++) {
         const idx = Math.floor(Math.random() * 4);
         network.train(inputs[idx], [targets[idx]]);
       }
@@ -53,6 +52,26 @@ describe('NeuralNetwork', () => {
 
       expect(network.feedForward([1, 1])[0]).toBeLessThanOrEqual(0.05);
       expect(network.feedForward([1, 1])[0]).toBeGreaterThanOrEqual(0.0);
+    });
+
+    test('can learn sin for small inputs', () => {
+      const network = new NeuralNetwork({
+        inputNodes: 1,
+        hiddenNodes: 16,
+        outputNodes: 1,
+        learningRate: 0.25
+      });
+
+      for (let i = 0; i < 100000; i++) {
+        const input = Math.floor(Math.random() * 10);
+        network.train([input], [Math.sin(input)]);
+      }
+
+      expect(network.feedForward([0])[0]).toBeLessThanOrEqual(0.04);
+      expect(network.feedForward([0])[0]).toBeGreaterThanOrEqual(-0.4);
+
+      expect(network.feedForward([1])[0]).toBeLessThanOrEqual(0.88);
+      expect(network.feedForward([1])[0]).toBeGreaterThanOrEqual(0.8);
     });
   });
 });

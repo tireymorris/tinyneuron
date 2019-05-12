@@ -1,5 +1,6 @@
 import Perceptron from './Perceptron';
+import NeuralNetwork from './NeuralNetwork';
 import * as activation from './activation';
 
-export { Perceptron, activation };
-export default Perceptron;
+export { activation, NeuralNetwork, Perceptron };
+export default NeuralNetwork;

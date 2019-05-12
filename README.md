@@ -47,7 +47,7 @@ import { activation, Perceptron } from 'tinyneuron';
 const perceptron = new Perceptron({ activation: activation.sigmoid });
 ```
 
-##### Example: AND gate
+#### Example: AND gate
 
 ```
 const andNode = new Perceptron({
@@ -66,4 +66,51 @@ andNode.getOutput() === -1;
 
 andNode.assignInputs([1, 1]);
 andNode.getOutput() === 1;
+```
+
+## Neural Networks
+
+#### Creation/config
+
+Create a neural network like so:
+
+```
+import { NeuralNetwork } from 'tinyneuron';
+
+const config = {
+  inputNodes: 2,
+  hiddenNodes: 2,
+  outputNodes: 1,
+  learningRate: 0.25
+}
+const network = new NeuralNetwork(config);
+```
+
+#### Training
+
+To train a network, call `train(inputs, targets) where`inputs`is an array with dimensions matching the number of input nodes, and`targets`is an array with dimensions matching the number of output nodes.`train` returns an array of outputs for the training round. For example:
+
+#### Example
+
+The following network can learn XOR:
+
+```
+const network = new NeuralNetwork({
+  inputNodes: 2,
+  hiddenNodes: 10,
+  outputNodes: 1,
+  learningRate: 0.25
+});
+const inputs = [[1, 0], [0, 1], [1, 1], [0, 0]];
+const targets = [1, 1, 0, 0];
+
+for (let i = 0; i < 50000; i++) {
+  const idx = Math.floor(Math.random() * 4);
+  network.train(inputs[idx], [targets[idx]]);
+}
+
+network.feedForward([1, 0]) // => approximately [1]
+network.feedForward([0, 1]) // => approximately [1]
+network.feedForward([0, 0]) // => approximately [0]
+network.feedForward([1, 1]) // => approximately [0]
 ```
