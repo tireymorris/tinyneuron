@@ -29,7 +29,7 @@ describe('NeuralNetwork', () => {
     test('can solve XOR', () => {
       const network = new NeuralNetwork({
         inputNodes: 2,
-        hiddenNodes: 10,
+        hiddenNodes: 5,
         outputNodes: 1,
         learningRate: 0.25
       });
@@ -71,7 +71,7 @@ describe('NeuralNetwork', () => {
       expect(network.feedForward([0])[0]).toBeGreaterThanOrEqual(-0.4);
 
       expect(network.feedForward([1])[0]).toBeLessThanOrEqual(0.88);
-      expect(network.feedForward([1])[0]).toBeGreaterThanOrEqual(0.8);
+      expect(network.feedForward([1])[0]).toBeGreaterThanOrEqual(0.76);
     });
   });
 });
