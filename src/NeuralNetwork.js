@@ -1,5 +1,5 @@
 import { Matrix } from 'tinymatrix';
-import { sigmoid } from './activation';
+import { sigmoid, dsigmoid } from './activation';
 
 class NeuralNetwork {
   constructor({
@@ -7,35 +7,75 @@ class NeuralNetwork {
     hiddenNodes = 1,
     outputNodes = 1,
     activation = sigmoid,
-    learningRate = 0.1
+    dActivation = dsigmoid,
+    learningRate = 0,
+    weightsIH,
+    weightsHO,
+    biasH,
+    biasO
   }) {
     this.inputNodes = inputNodes;
     activation = sigmoid;
     this.hiddenNodes = hiddenNodes;
     this.outputNodes = outputNodes;
     this.activation = activation;
+    this.dActivation = dActivation;
     this.learningRate = learningRate;
+    this.weightsIH = weightsIH;
+    this.weightsHO = weightsHO;
+    this.biasH = biasH;
+    this.biasO = biasO;
 
+    this.generateWeightsAndBiases({
+      inputNodes,
+      hiddenNodes,
+      outputNodes
+    });
+  }
+
+  static clone(network) {
+    return NeuralNetwork.deserialize(network.serialize());
+  }
+
+  static deserialize(data) {
+    if (typeof data === 'string') {
+      data = JSON.parse(data);
+    }
+
+    return new NeuralNetwork(...data);
+  }
+
+  generateWeightsAndBiases({ inputNodes, hiddenNodes, outputNodes }) {
     // Create weights from input -> hidden
     // And from hidden -> output
-    this.weightsIH = new Matrix({
-      rows: hiddenNodes,
-      columns: inputNodes
-    });
-    this.weightsHO = new Matrix({
-      rows: outputNodes,
-      columns: hiddenNodes
-    });
+    // Then generate random weights
+    if (!this.weightsIH) {
+      const weightsIH = new Matrix({
+        rows: hiddenNodes,
+        columns: inputNodes
+      });
 
-    // Generate random weights
-    this.weightsIH = Matrix.map(this.weightsIH, () => Math.random() * 2 - 1);
-    this.weightsHO = Matrix.map(this.weightsHO, () => Math.random() * 2 - 1);
+      this.weightsIH = Matrix.map(weightsIH, () => Math.random() * 2 - 1);
+    }
+
+    if (!this.weightsHO) {
+      const weightsHO = new Matrix({
+        rows: outputNodes,
+        columns: hiddenNodes
+      });
+      this.weightsHO = Matrix.map(weightsHO, () => Math.random() * 2 - 1);
+    }
 
     // Generate bias nodes
-    this.biasH = new Matrix({ rows: hiddenNodes, columns: 1 });
-    this.biasO = new Matrix({ rows: outputNodes, columns: 1 });
-    this.biasH = Matrix.randomize(this.biasH, 2);
-    this.biasO = Matrix.randomize(this.biasO, 2);
+    if (!this.biasH) {
+      const biasH = new Matrix({ rows: hiddenNodes, columns: 1 });
+      this.biasH = Matrix.randomize(biasH, 2);
+    }
+
+    if (!this.biasO) {
+      const biasO = new Matrix({ rows: outputNodes, columns: 1 });
+      this.biasO = Matrix.randomize(biasO, 2);
+    }
   }
 
   // get outputs from hidden layer
@@ -94,9 +134,8 @@ class NeuralNetwork {
     // calculate output gradients
     // first, use derivate of sigmoid function
     //    - not exactly - outputs have already been mapped to sigmoid
-    let gradient = Matrix.map(
-      outputs,
-      ([i, j]) => outputs.values[i][j] * (1 - outputs.values[i][j])
+    let gradient = Matrix.map(outputs, ([i, j]) =>
+      this.dActivation(outputs.values[i][j])
     );
     // entrywise multiply gradient with errors
     gradient = Matrix.entrywiseProduct(gradient, errors);
@@ -114,6 +153,25 @@ class NeuralNetwork {
     return deltaWeights;
   }
 
+  mutate(operation) {
+    this.weightsIH = Matrix.map(this.weightsIH, ([i, j]) =>
+      operation(this.weightsIH.values[(i, j)])
+    );
+    this.weightsHO = Matrix.map(this.weightsHO, ([i, j]) =>
+      operation(this.weightsHO.values[(i, j)])
+    );
+    this.biasH = Matrix.map(this.biasH, ([i, j]) =>
+      operation(this.biasH.values[(i, j)])
+    );
+    this.biasO = Matrix.map(this.biasO, ([i, j]) =>
+      operation(this.biasO.values[(i, j)])
+    );
+  }
+
+  serialize() {
+    return JSON.stringify(this);
+  }
+
   train(inputsArray, targetsArray) {
     const inputs = Matrix.fromArray(inputsArray);
     // replicate feed forward - get hidden outputs from inputs
@@ -128,8 +186,6 @@ class NeuralNetwork {
     );
     // calculate deltas for hidden -> output using gradient
     const outputGradient = this.getGradient(outputs, outputErrors);
-    // const hiddenT = Matrix.transpose(hiddenOutputs);
-    // const deltaWeightsHO = Matrix.multiply(outputGradient, hiddenT);
     const deltaWeightsHO = this.getDeltaWeights(hiddenOutputs, outputGradient);
     // adjust hidden -> output weights by delta and bias by gradient
     this.weightsHO = Matrix.add(this.weightsHO, deltaWeightsHO);
@@ -139,8 +195,6 @@ class NeuralNetwork {
     const hiddenErrors = Matrix.multiply(weightsHOT, outputErrors);
     // calculate deltas for input -> hidden using gradient
     const hiddenGradient = this.getGradient(hiddenOutputs, hiddenErrors);
-    // const inputsT = Matrix.transpose(inputs);
-    // const deltaWeightsIH = Matrix.multiply(hiddenGradient, inputsT);
     const deltaWeightsIH = this.getDeltaWeights(inputs, hiddenGradient);
     // adjust input -> hidden weights by delta
     this.weightsIH = Matrix.add(this.weightsIH, deltaWeightsIH);
