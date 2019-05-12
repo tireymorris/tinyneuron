@@ -114,3 +114,7 @@ network.feedForward([0, 1]) // => approximately [1]
 network.feedForward([0, 0]) // => approximately [0]
 network.feedForward([1, 1]) // => approximately [0]
 ```
+
+#### References
+
+Heavily referenced Daniel Shiffman's The Nature of Code (https://natureofcode.com/book)
