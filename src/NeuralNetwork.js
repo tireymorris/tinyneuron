@@ -33,8 +33,8 @@ class NeuralNetwork {
     });
   }
 
-  static clone(network) {
-    return NeuralNetwork.deserialize(network.serialize());
+  clone() {
+    return NeuralNetwork.deserialize(this.serialize());
   }
 
   static deserialize(data) {
@@ -42,7 +42,7 @@ class NeuralNetwork {
       data = JSON.parse(data);
     }
 
-    return new NeuralNetwork(...data);
+    return new NeuralNetwork(data);
   }
 
   generateWeightsAndBiases({ inputNodes, hiddenNodes, outputNodes }) {
