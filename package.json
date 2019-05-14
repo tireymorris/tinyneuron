@@ -1,6 +1,6 @@
 {
   "name": "tinyneuron",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "An implementation of various neural networks in JavaScript",
   "main": "dist/index.js",
   "repository": "https://github.com/tireymorris/tinyneuron.git",
@@ -17,6 +17,7 @@
   },
   "scripts": {
     "build": "babel src -d dist",
+    "debug": "node --inspect-brk node_modules/.bin/jest --runInBand --no-cache spec/ --watch",
     "install": "babel src -d dist",
     "test": "yarn jest --no-cache spec/"
   },
